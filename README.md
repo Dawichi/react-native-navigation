@@ -184,14 +184,12 @@ const DetailScreen = ({ navigation }) => {
 	)
 }
 
-HomeScreen.navigationOptions = {
+DetailScreen.navigationOptions = {
 	title: 'Second page'
 }
 ````
 
-That will modify the view to show the correct title that we defined there
-
-![]()
+That will modify the view to show the correct title that we defined there, `'Second Page'`.
 
 
 
@@ -207,9 +205,26 @@ DetailScreen.navigationOptions = ({ navigation }) => {
 
 This will allow to fetch a title with the `.getParam()` function we already know. And also pass a default value as second argument.
 
-For now, because we didn't define any `'title'` property to load, we will get a `'Loading...'` as title
+For now, because we didn't define any `'title'` property to load, we will get a `'Loading...'` as title. So to get a dynamic title, we need to define in our another screen (Home) the data
 
-![]()
+````jsx
+const HomeScreen = ({ navigation }) => {
+	return (
+		<View style={styles.container}>
+			<Text>Home</Text>
+			<Button
+				title="Go to detail"
+				// As second argument, recieves an object, the data
+				onPress={() => navigation.navigate('Detail', { title: 'Dynamic title', user_id: 2 })}
+			/>
+	  	</View>
+	)
+}
+````
+
+That will allow our `.getParam` to load the property `title` and show the correct one. Here there are the 3 screens showing the changes.
+
+<img src="./images/1.jpg" style="width:30%;" /><img src="./images/2.jpg" style="width:30%;" /><img src="./images/3.jpg" style="width:30%;" />
 
 
 
