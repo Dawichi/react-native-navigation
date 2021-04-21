@@ -17,13 +17,11 @@ const HomeScreen = ({ navigation }) => {
 }
 
 HomeScreen.navigationOptions = {
-	title: 'First page'
+	title: 'Home page'
 }
 
 const DetailScreen = ({ navigation }) => {
-
-	// And in the other screen, with the function getParam() we fetch the data, 
-	// and optionally asigning a default value as second parameter
+	
 	const user = navigation.getParam('user_name', 'defaultvalue')
 
 	return (
@@ -39,7 +37,11 @@ const DetailScreen = ({ navigation }) => {
 
 DetailScreen.navigationOptions = ({ navigation }) => {
 	return {
-		title: navigation.getParam('title', 'Loading...')
+		title: navigation.getParam('title', 'Loading...'),
+		headerStyle: {
+			backgroundColor: '#e76f51'
+		},
+		headerTintColor: '#fff'
 	}
 }
 
@@ -50,7 +52,18 @@ const AppNavigator = createStackNavigator({
 	Detail: {
 		screen: DetailScreen
 	}
-}, { initialRouteName: 'Home' })
+}, {
+	initialRouteName: 'Home',
+	defaultNavigationOptions: {
+		headerStyle: {
+			backgroundColor: '#264653',
+		},
+		headerTintColor: '#fff',
+		headerTitleStyle: {
+			fontWeight: 'bold'
+		}
+	}
+})
 
 export default createAppContainer(AppNavigator)
 

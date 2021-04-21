@@ -228,6 +228,106 @@ That will allow our `.getParam` to load the property `title` and show the correc
 
 
 
+And can the screen modify his own title? Sure! Just use `.setParams()`
+
+```jsx
+const DetailScreen = ({ navigation }) => {
+
+	return (
+		<View style={styles.container}>
+			<Text>Detail</Text>
+			<Button
+				title="Back to home"
+				onPress={() => navigation.setParams({ title: 'Modified'})}
+			/>
+	  	</View>
+	)
+}
+```
+
+That would modify our current title `'Loading...'` or `'Dynamic title'` to `'Modified'`
+
+
+
+
+
+## 3. Styling the navbar
+
+We can style the navbar modifying the `.navigationOptions`
+
+````jsx
+// Dark background, text white, font weight
+HomeScreen.navigationOptions = {
+	title: 'Home page',
+	headerStyle: {
+		backgroundColor: '#264653',
+	},
+	headerTintColor: '#fff',
+	headerTitleStyle: {
+		fontWeight: 'bold'
+	}
+}
+// Red background, text white
+DetailScreen.navigationOptions = ({ navigation }) => {
+	return {
+		title: navigation.getParam('title', 'Loading...'),
+		headerStyle: {
+			backgroundColor: '#e76f51'
+		},
+		headerTintColor: '#fff'
+	}
+}
+````
+
+<img src="./images/4.jpg" width="30%" /><img src="./images/5.jpg" width="30%" />
+
+
+
+So now we are defining 2 times our style, being different for each navbar screen. But what if we wanna have a default style for all the app?
+
+Then we need to change our `createStackNavigator()`. Remember how it was until now:
+
+````jsx
+const AppNavigator = createStackNavigator({
+	Home: {
+		screen: HomeScreen
+	},
+	Detail: {
+		screen: DetailScreen
+	}
+}, {initialRouteName: 'Home' })
+````
+
+So now we gonna add `defaultNavigationOptions`
+
+````jsx
+const AppNavigator = createStackNavigator({
+	Home: {
+		screen: HomeScreen
+	},
+	Detail: {
+		screen: DetailScreen
+	}
+}, {
+	initialRouteName: 'Home',
+	defaultNavigationOptions: {
+		headerStyle: {
+			backgroundColor: '#264653',
+		},
+		headerTintColor: '#fff',
+		headerTitleStyle: {
+			fontWeight: 'bold'
+		}
+	}
+})
+````
+
+That will make those options the default styling of our navbars. We could overwrite them in each screen with the `navigationOptions` system we saw before.
+
+
+
+   
+
 
 
 
