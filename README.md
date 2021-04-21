@@ -224,7 +224,7 @@ const HomeScreen = ({ navigation }) => {
 
 That will allow our `.getParam` to load the property `title` and show the correct one. Here there are the 3 screens showing the changes.
 
-<img src="./images/1.jpg" style="width:30%;" /><img src="./images/2.jpg" style="width:30%;" /><img src="./images/3.jpg" style="width:30%;" />
+<img src="./images/1.jpg" width="30%" /><img src="./images/2.jpg" width="30%" /><img src="./images/3.jpg" width="30%" />
 
 
 
