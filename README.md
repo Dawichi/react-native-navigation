@@ -1,0 +1,219 @@
+# react-native-navigation
+Navigation system inside React Native
+
+
+
+````bash
+$ expo init react-native-navigation
+$ expo install react-navigation react-native-gesture-handler react-native-reanimated react-native-screens
+````
+
+
+
+react-navigation has 3 child dependencies:
+
+* `react-navigation` - navigation system
+  * `react-native-gesture-handler` - makes the gestures system better
+  * `react-native-reanimated` - makes fluent animation
+  * `react-native-screens` - direct dependency
+
+
+
+### Install Stack navigation
+
+`$ yarn add react-navigation-stack`
+
+
+
+### Import the dependencies
+
+````jsx
+// App.js
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+````
+
+>  Note: `createAppContainer ` must be declared on the top of the components, in the root of our project to wrap all the system.
+
+
+
+
+
+## 1. Configuring the basic navigation
+
+````jsx
+import React from 'react'
+import { StyleSheet, Text, View, Button } from 'react-native'
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+
+// Screen 1
+const HomeScreen = ({ navigation }) => {
+	return (
+		<View style={styles.container}>
+			<Text>Home</Text>
+			<Button
+				title="Go to detail"
+				onPress={() => navigation.push('Detail')}
+			/>
+	  	</View>
+	)
+}
+
+// Screen 2
+const DetailScreen = ({ navigation }) => {
+	return (
+		<View style={styles.container}>
+			<Text>Detail</Text>
+			<Button
+				title="Back to home"
+				onPress={() => navigation.goBack()}
+			/>
+	  	</View>
+	)
+}
+
+// Stack navigation defined
+const AppNavigator = createStackNavigator({
+	Home: {
+		screen: HomeScreen
+	},
+	Detail: {
+		screen: DetailScreen
+	}
+}, { initialRouteName: 'Home' })
+
+export default createAppContainer(AppNavigator)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})
+````
+
+
+
+The "problem" here is that when we make `onPress={() => navigation.hoBack()}` we are unmounting the last screen and coming back. So we lost the data.
+
+If we want to move from one screen to another sharing data between them, we need to change our moving system from `navigation.push()` to `navigation.navigate()`
+
+Example:
+
+```jsx
+import React from 'react'
+import { StyleSheet, Text, View, Button } from 'react-native'
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+
+// Screen 1
+const HomeScreen = ({ navigation }) => {
+	return (
+		<View style={styles.container}>
+			<Text>Home</Text>
+			<Button
+				title="Go to detail"
+				// As second argument, recieves an object, the data
+				onPress={() => navigation.navigate('Detail', { user_name: 'Joanne', user_id: 2 })}
+			/>
+	  	</View>
+	)
+}
+
+// Screen 2
+const DetailScreen = ({ navigation }) => {
+
+	// And in the other screen, with the function getParam() we fetch the data, 
+	// and optionally asigning a default value as second parameter
+	const user = navigation.getParam('user_name', 'defaultvalue')
+
+	return (
+		<View style={styles.container}>
+			<Text>Detail</Text>
+			<Button
+				title="Back to home"
+				onPress={() => navigation.goBack()}
+			/>
+	  	</View>
+	)
+}
+
+// Stack navigation defined
+const AppNavigator = createStackNavigator({
+	Home: {
+		screen: HomeScreen
+	},
+	Detail: {
+		screen: DetailScreen
+	}
+}, { initialRouteName: 'Home' })
+
+export default createAppContainer(AppNavigator)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})
+```
+
+
+
+
+
+## 2. Modifying the navbar
+
+To modify the default name of the navbar, we will use `navigationOptions` property
+
+````jsx
+const DetailScreen = ({ navigation }) => {
+	return (
+		<View style={styles.container}>
+			<Text>Detail</Text>
+			<Button
+				title="Back to home"
+				onPress={() => navigation.goBack()}
+			/>
+	  	</View>
+	)
+}
+
+HomeScreen.navigationOptions = {
+	title: 'Second page'
+}
+````
+
+That will modify the view to show the correct title that we defined there
+
+![]()
+
+
+
+But what if we want to make that title to load dynamically? Then we need to modify a little that property.
+
+````jsx
+DetailScreen.navigationOptions = ({ navigation }) => {
+	return {
+		title: navigation.getParam('title', 'Loading...')
+	}
+}
+````
+
+This will allow to fetch a title with the `.getParam()` function we already know. And also pass a default value as second argument.
+
+For now, because we didn't define any `'title'` property to load, we will get a `'Loading...'` as title
+
+![]()
+
+
+
+
+
+
+
