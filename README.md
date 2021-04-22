@@ -325,6 +325,7 @@ const AppNavigator = createStackNavigator({
 That will make those options the default styling of our navbars. We could overwrite them in each screen with the `navigationOptions` system we saw before.
 
 
+s
 
    
 
