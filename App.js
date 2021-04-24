@@ -1,7 +1,10 @@
 import React from 'react'
+import {Ionicons} from '@expo/vector-icons'
 import { StyleSheet, Text, View, Button } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createDrawerNavigator } from 'react-navigation-drawer'
 
 const HomeScreen = ({ navigation }) => {
 	return (
@@ -9,8 +12,7 @@ const HomeScreen = ({ navigation }) => {
 			<Text>Home</Text>
 			<Button
 				title="Go to detail"
-				// As second argument, recieves an object, the data
-				onPress={() => navigation.navigate('Detail', { title: 'Dynamic title', user_id: 2 })}
+				onPress={() => navigation.openDrawer()}
 			/>
 	  	</View>
 	)
@@ -45,7 +47,7 @@ DetailScreen.navigationOptions = ({ navigation }) => {
 	}
 }
 
-const AppNavigator = createStackNavigator({
+const AppNavigator = createDrawerNavigator({
 	Home: {
 		screen: HomeScreen
 	},
@@ -54,18 +56,17 @@ const AppNavigator = createStackNavigator({
 	}
 }, {
 	initialRouteName: 'Home',
-	defaultNavigationOptions: {
-		headerStyle: {
-			backgroundColor: '#264653',
-		},
-		headerTintColor: '#fff',
-		headerTitleStyle: {
-			fontWeight: 'bold'
-		}
-	}
 })
 
-export default createAppContainer(AppNavigator)
+const RootStack = createStackNavigator({
+	Main: AppNavigator,
+	Modal: () => <Text>lalala</Text>
+}, {
+	mode: 'modal',
+	headerMode: 'none'
+})
+
+export default createAppContainer(RootStack)
 
 const styles = StyleSheet.create({
   container: {

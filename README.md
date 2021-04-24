@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 
 
 
-The "problem" here is that when we make `onPress={() => navigation.hoBack()}` we are unmounting the last screen and coming back. So we lost the data.
+The "problem" here is that when we do `onPress={() => navigation.hoBack()}` we are unmounting the last screen and coming back. So we lost the data.
 
 If we want to move from one screen to another sharing data between them, we need to change our moving system from `navigation.push()` to `navigation.navigate()`
 
@@ -325,9 +325,196 @@ const AppNavigator = createStackNavigator({
 That will make those options the default styling of our navbars. We could overwrite them in each screen with the `navigationOptions` system we saw before.
 
 
-s
 
-   
+## 4. Modify navbar content
+
+To replace the navbar title with a component (pe. an image):
+
+```jsx
+HomeScreen.navigationOptions = {
+    headerTitle: <Logo/>
+}
+```
+
+
+
+And to add content in the right part of the header (like a button for example):
+
+````jsx
+useEffect(() => {
+    navigation.setParams({ incrementar })
+}, [state])
+
+HomeScreen.navigationOptions = ({ navigation, navigationOptions }) => {
+    headerRight: (
+    	<Button
+        	onPress={navigation.getParam('function-parameter')}
+            title="Press me"
+        />
+    )
+}
+````
+
+
+
+
+
+## 5. Tabs navigation
+
+```shell
+$ yarn add react-navigation-tabs
+```
+
+Basic usage
+
+````jsx
+const AppNavigator = createBottomTabNavigator({
+	Home: {
+		screen: HomeScreen
+	},
+	Detail: {
+		screen: DetailScreen
+	}
+}, {
+	initialRouteName: 'Home',
+	defaultNavigationOptions: {
+		
+	}
+})
+````
+
+Tabs styling with an object
+
+````jsx
+const AppNavigator = createBottomTabNavigator({
+	Home: {
+		screen: HomeScreen
+	},
+	Detail: {
+		screen: DetailScreen
+	}
+}, {
+	initialRouteName: 'Home',
+	defaultNavigationOptions: {
+		tabBarOptions: {
+			activeTintColor: 'blue',
+			inactiveTintColor: 'white',
+			labelStyle: {
+				fontSize: 15,
+			},
+			style: {
+				backgroundColor: '#ccc'
+			}
+		}
+	}
+})
+````
+
+Tabs styling with a function, for more complex styling
+
+`````jsx
+const AppNavigator = createBottomTabNavigator({
+	Home: {
+		screen: HomeScreen
+	},
+	Detail: {
+		screen: DetailScreen
+	}
+}, {
+	initialRouteName: 'Home',
+	defaultNavigationOptions: ({ navigation }) => ({
+		tabBarOptions: {
+			activeTintColor: navigation.state.routeName == 'Home' ? 'blue' : 'orange',
+			inactiveTintColor: 'white',
+			labelStyle: {
+				fontSize: 15,
+			},
+			style: {
+				backgroundColor: '#ccc'
+			}
+		}
+	})
+})
+`````
+
+Adding Icons
+
+expo comes with a icon module for icon sets
+
+````jsx
+// All icons here: https://oblador.github.io/react-native-vector-icons/
+import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons'
+````
+
+There we can choose between more than 10 icon libraries and import them to our file
+
+After that, we can use them in our tabs
+
+````jsx
+const AppNavigator = createBottomTabNavigator({
+	Home: {
+		screen: HomeScreen
+	},
+	Detail: {
+		screen: DetailScreen
+	}
+}, {
+	initialRouteName: 'Home',
+	defaultNavigationOptions: ({ navigation }) => ({
+		tabBarIcon: ({ focused, horizontal, tintColor }) => {
+			const { routeName } = navigation.state
+			let iconName
+			if (routeName === 'Home') {
+				iconName = `ios-information-circle${focused ? '' : '-outline'}`
+			} else {
+				iconName = 'ios-options'
+			}
+			return <Ionicons name={iconName} size={20} tintColor={tintColor} />
+		},
+		tabBarOptions: {
+			activeTintColor: navigation.state.routeName == 'Home' ? 'blue' : 'orange',
+			inactiveTintColor: 'white',
+			labelStyle: {
+				fontSize: 15,
+			},
+			style: {
+				backgroundColor: '#ccc'
+			}
+		}
+	})
+})
+````
+
+
+
+## 6. Drawer navigation
+
+````shell
+$ yarn add react-navigation-drawer 
+````
+
+
+
+
+````jsx
+import { createDrawerNavigator } from 'react-navigation-drawer'
+````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
