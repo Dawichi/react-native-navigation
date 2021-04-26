@@ -517,11 +517,87 @@ $ yarn add react-navigation-drawer
 import { createDrawerNavigator } from 'react-navigation-drawer'
 ````
 
+Usage: 
+
+`````jsx
+// Route 1
+const HomeScreen = ({ navigation }) => {
+	return (
+		<>
+			<Text>Home</Text>
+			<Button
+				title="Go to detail"
+				onPress={() => navigation.openDrawer()}
+			/>
+	  	</>
+	)
+}
+HomeScreen.navigationOptions = {
+	drawerIcon: ({ tintColor }) => {
+		return <Ionicons name='ios-information-circle' size={25} color={tintColor} />
+	},
+	headerTitle: 'Home',
+	headerStyle: { backgroundColor: '#eee' }
+}
+
+// Route 2
+const DetailScreen = ({ navigation }) => {
+	return (
+		<>
+			<Text>Detail</Text>
+			<Button
+				title="Back to home"
+				onPress={() => navigation.goBack()}
+			/>
+	  	</>
+	)
+}
+DetailScreen.navigationOptions = ({ navigation }) => {
+	return {
+		headerTitle: 'Menu 2'
+	}
+}
+
+// Nav system
+const AppNavigator = createDrawerNavigator({
+	Home: {	screen: HomeScreen },
+	Detail: { screen: DetailScreen }
+}, { initialRouteName: 'Home' })
+
+const RootStack = createStackNavigator({
+	Main: AppNavigator,
+	Modal: () => <Text>lalala</Text>
+}, {
+	mode: 'modal',
+	headerMode: 'none'
+})
+`````
+
+<img src="./images/6.jpg" alt="img6" style="width:30%;" align='left' />
 
 
 
 
 
+## 4. Switch navigation
+
+The easiest one. Works with the conf of drawer or tabs.
+
+Does not remember any info from last screen, so it deletes the stack history. It's used only in login/register processes, to forget the login/register screen after entry the app.
+
+
+````jsx
+import { createSwitchNavigator } from 'react-navigation'
+````
+
+Usage:
+
+````jsx
+const AppNavigator = createSwitchNavigator({
+	Home: {	screen: HomeScreen },
+	Detail: { screen: DetailScreen }
+}, { initialRouteName: 'Home' })
+````
 
 
 
