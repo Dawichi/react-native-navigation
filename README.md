@@ -505,6 +505,8 @@ const AppNavigator = createBottomTabNavigator({
 
 ## 3. Drawer navigation
 
+Is a side section with a vertical menu
+
 ````shell
 $ yarn add react-navigation-drawer 
 ````
