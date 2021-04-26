@@ -1,8 +1,6 @@
 # react-native-navigation
 Navigation system inside React Native
 
-
-
 ````bash
 $ expo init react-native-navigation
 $ expo install react-navigation react-native-gesture-handler react-native-reanimated react-native-screens
@@ -16,16 +14,43 @@ react-navigation has 3 child dependencies:
   * `react-native-gesture-handler` - makes the gestures system better
   * `react-native-reanimated` - makes fluent animation
   * `react-native-screens` - direct dependency
+  
+  
+
+There are 4 types available
+
+* Stack
+* Tabs
+* Drawer
+* Switch
+
+**Stack:** Consists in stack all the menus available like in an array, as on history mode, so we will be able to come back following our last steps.
+
+**Tabs:** The usual mobile phone layout, with a bottom bar with tabs to click and switch the content of the screen.
+
+**Drawer:** Almost equal to tabs, but collapsable. Used in vertical menus.
+
+**Switch:** Moves to a new route and drops everything in memory about last screens. Used for example, to move from the login screen to the home.
+
+````
+SCHEME EXAMPLE: The login moves us throw a [switch] to the home page, which contains a [tabs] system with 2 [stack] menu and one [drawer]
+
+	LOGIN  (switch)
+		---------->
+				   	APP 
+				   (tabs)
+				  /	 |    \
+				\/	 \/    \/
+           (stack) (stack) (drawer)
+````
 
 
 
-### Install Stack navigation
+
+
+## 1 - Stack navigation
 
 `$ yarn add react-navigation-stack`
-
-
-
-### Import the dependencies
 
 ````jsx
 // App.js
@@ -37,9 +62,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 
 
 
-
-
-## 1. Configuring the basic navigation
+### 1.1 - Configuring the basic navigation
 
 ````jsx
 import React from 'react'
@@ -165,9 +188,7 @@ const styles = StyleSheet.create({
 
 
 
-
-
-## 2. Modifying the navbar
+### 1.2 - Modifying the navbar
 
 To modify the default name of the navbar, we will use `navigationOptions` property
 
@@ -249,9 +270,7 @@ That would modify our current title `'Loading...'` or `'Dynamic title'` to `'Mod
 
 
 
-
-
-## 3. Styling the navbar
+### 1.3 - Styling the navbar
 
 We can style the navbar modifying the `.navigationOptions`
 
@@ -326,7 +345,7 @@ That will make those options the default styling of our navbars. We could overwr
 
 
 
-## 4. Modify navbar content
+### 1.4 - Modify navbar content
 
 To replace the navbar title with a component (pe. an image):
 
@@ -359,7 +378,7 @@ HomeScreen.navigationOptions = ({ navigation, navigationOptions }) => {
 
 
 
-## 5. Tabs navigation
+## 2 - Tabs navigation
 
 ```shell
 $ yarn add react-navigation-tabs
@@ -487,13 +506,11 @@ const AppNavigator = createBottomTabNavigator({
 
 
 
-## 6. Drawer navigation
+## 3. Drawer navigation
 
 ````shell
 $ yarn add react-navigation-drawer 
 ````
-
-
 
 
 ````jsx
