@@ -35,13 +35,10 @@ There are 4 types available
 ````
 SCHEME EXAMPLE: The login moves us throw a [switch] to the home page, which contains a [tabs] system with 2 [stack] menu and one [drawer]
 
-	LOGIN  (switch)
-		---------->
-				   	APP 
-				   (tabs)
-				  /	 |    \
-				\/	 \/    \/
-           (stack) (stack) (drawer)
+LOGIN
+  | (switch)
+  ---> HOME (stack) (drawer)
+
 ````
 
 
