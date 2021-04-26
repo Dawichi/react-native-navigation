@@ -572,7 +572,7 @@ const RootStack = createStackNavigator({
 
 
 
-<img src="./images/6.jpg" alt="img6" width="30%" align='left' />
+<img src="./images/6.jpg" alt="img6" width="30%" />
 
 
 
